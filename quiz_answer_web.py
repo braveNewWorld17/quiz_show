@@ -48,6 +48,20 @@ def get_quiz_type():
 
     return type_set 
 
+def get_quiz(quiz_type):
+    quiz_set = []
+    conn = pymysql.connect(host='localhost',
+                       user='root', password='as920558',
+                       db='test', charset='utf8')
+    curs = conn.cursor()
+    sql = "select quiz, answer from quiz where quiz_type_code = " + quiz_type
+    curs.execute(sql)
+    rows = curs.fetchall()
+    for row in rows:
+        quiz_set.append({ 'quiz':row[0], 'answer':row[1] })
+    conn.close()
+    return quiz_set
+
 def get_link(type_set):
     html = "<br>"
     for type in type_set:
@@ -63,37 +77,18 @@ def get_quiz_header(quiz_type_desc):
     html = "<h1> " + quiz_type_desc + "Question</h1>"
     return html 
 
-def get_quiz(quiz_type):
-    quiz_set = []
-    conn = pymysql.connect(host='localhost',
-                       user='root', password='as920558',
-                       db='test', charset='utf8')
-    curs = conn.cursor()
-    sql = "select quiz, answer from quiz where quiz_type_code = " + quiz_type
-    curs.execute(sql)
-    rows = curs.fetchall()
-    for row in rows:
-        quiz_set.append({ 'quiz':row[0], 'answer':row[1] })
-    conn.close()
-    return quiz_set
-
 def table_quiz_answer(quiz_set, page_no, link):
     cur_page = int(page_no)
-    index = 0
 
     html = "<table border = '1'>"
     html += "<tr><th align = 'center'><h3> Quiz </th>"  
     html += "<th align = 'center'><h3> Answer </th></tr>"  
-    for qset in quiz_set:
-        if(index == cur_page): 
-           print("qset = ", qset['quiz'])
-           qa_pair = "<tr align = 'center' valign = 'middle'>"
-           qa_pair += "<td><h3>Capital of <b>" + qset['quiz'] + "</b></td>"
-           qa_pair += "<td><h3><font color='red'><i>" + qset['answer'] + "</font></i></h3><p></td>"
-           qa_pair += "</tr>"
-           html += qa_pair
 
-        index += 1
+    qa_pair = "<tr align = 'center' valign = 'middle'>"
+    qa_pair += "<td><h3>Capital of <b>" + quiz_set[cur_page]['quiz'] + "</b></td>"
+    qa_pair += "<td><h3><font color='red'><i>" + quiz_set[cur_page]['answer'] + "</font></i></h3><p></td>"
+    qa_pair += "</tr>"
+    html += qa_pair
 
     html += "</table>"
     html += "<br><br>"
