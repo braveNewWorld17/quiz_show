@@ -82,14 +82,24 @@ def table_quiz_answer(quiz_set, page_no, link):
 
     html = "<table border = '1'>"
     html += "<tr><th align = 'center'><h3> Quiz </th>"  
+<<<<<<< HEAD:quiz_answer_session.py
     html += "<th align = 'center'><h3> Answer </th></tr>"  
 
+=======
+    html += "<th align = 'center'><h3> Answer </th></tr>"
+    
+>>>>>>> 8a8279241481232afff7d19696392e2db6b10ce5:quiz_answer_web.py
     qa_pair = "<tr align = 'center' valign = 'middle'>"
     qa_pair += "<td><h3>Capital of <b>" + quiz_set[cur_page]['quiz'] + "</b></td>"
     qa_pair += "<td><h3><font color='red'><i>" + quiz_set[cur_page]['answer'] + "</font></i></h3><p></td>"
     qa_pair += "</tr>"
+<<<<<<< HEAD:quiz_answer_session.py
     html += qa_pair
 
+=======
+    
+    html += qa_pair
+>>>>>>> 8a8279241481232afff7d19696392e2db6b10ce5:quiz_answer_web.py
     html += "</table>"
     html += "<br><br>"
     return html
